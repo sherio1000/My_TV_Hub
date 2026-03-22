@@ -1,73 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My IPTV Hub</title>
+    <meta charset="utf-8">
+    <title>IPTV HUB</title>
     <style>
-        body { 
-            background-color: black; 
-            color: white; 
-            font-family: 'Segoe UI', Arial, sans-serif; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-            height: 100vh; 
-            margin: 0;
-        }
-        h1 { margin-bottom: 40px; font-size: 3rem; }
+        body { background: #000; color: #fff; text-align: center; font-family: sans-serif; padding-top: 50px; }
+        h1 { font-size: 48px; margin-bottom: 50px; }
+        
+        /* This makes the buttons BIG and look like TV buttons */
         .btn { 
-            display: block; 
-            width: 500px; /* Big enough for a TV screen */
-            margin: 15px; 
-            padding: 30px; 
+            display: inline-block; 
+            width: 600px; 
+            padding: 40px; 
+            margin: 20px; 
             background: #222; 
-            border: 4px solid #444; 
+            border: 5px solid #444; 
             color: white; 
-            font-size: 2rem; 
-            font-weight: bold;
-            border-radius: 15px; 
-            text-decoration: none;
-            transition: 0.2s;
-            text-align: center;
+            font-size: 36px; 
+            text-decoration: none; 
+            border-radius: 20px;
         }
-        /* This creates the blue "Highlight" when you use the remote arrows */
+
+        /* This is the "Selector" color for your remote */
         .btn:focus { 
-            background: #007bff; 
-            border-color: white; 
-            transform: scale(1.1); /* Makes the button pop out */
-            outline: none; 
+            background: #0066ff; 
+            border-color: #fff; 
+            transform: scale(1.05);
+            outline: none;
         }
     </style>
 </head>
-<body>
+<body onload="init()">
 
-    <h1>My IPTV Playlists</h1>
-    
-    <a href="#" class="btn">Live Sports</a>
-    <a href="#" class="btn">Movies & Series</a>
+    <h1>MY IPTV HUB</h1>
+    <a href="#" class="btn" id="default-focus">LIVE SPORTS</a><br>
+    <a href="#" class="btn">MOVIES & SERIES</a>
 
     <script src="https://cdn.jsdelivr.net/npm/spatial-navigation-js@0.5.0/dist/spatial_navigation.min.js"></script>
-    
     <script>
-        window.addEventListener('load', function() {
-            // 1. Initialize remote navigation
+        function init() {
             SpatialNavigation.init();
             SpatialNavigation.add({ selector: '.btn' });
             SpatialNavigation.makeFocusable();
-            SpatialNavigation.focus(); // Auto-focus the first button on startup
+            SpatialNavigation.focus('#default-focus');
+        }
 
-            // 2. Handle the "Return/Exit" button on Samsung Remote
-            window.addEventListener('keydown', function(e) {
-                // Key code 10009 is the "Back" button on Tizen
-                if(e.keyCode == 10009 || e.key === "Escape") {
-                    if (window.tizen) {
-                        tizen.application.getCurrentApplication().exit();
-                    } else {
-                        window.close();
-                    }
-                }
-            });
-        </script>
+        // EXIT BUTTON FIX
+        window.addEventListener('keydown', function(e) {
+            if(e.keyCode == 10009) { // Samsung Return Key
+                tizen.application.getCurrentApplication().exit();
+            }
+        });
+    </script>
 </body>
 </html>
