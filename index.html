@@ -1,23 +1,73 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My IPTV Hub</title>
     <style>
-        body { background: #000; color: #fff; font-family: sans-serif; padding: 50px; }
-        .btn { display: block; width: 100%; padding: 25px; margin: 15px 0; background: #222; 
-               border: 3px solid #444; color: #fff; font-size: 30px; border-radius: 15px; text-align: left; }
-        .btn:focus { background: #007bff; border-color: #fff; outline: none; }
+        body { 
+            background-color: black; 
+            color: white; 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            height: 100vh; 
+            margin: 0;
+        }
+        h1 { margin-bottom: 40px; font-size: 3rem; }
+        .btn { 
+            display: block; 
+            width: 500px; /* Big enough for a TV screen */
+            margin: 15px; 
+            padding: 30px; 
+            background: #222; 
+            border: 4px solid #444; 
+            color: white; 
+            font-size: 2rem; 
+            font-weight: bold;
+            border-radius: 15px; 
+            text-decoration: none;
+            transition: 0.2s;
+            text-align: center;
+        }
+        /* This creates the blue "Highlight" when you use the remote arrows */
+        .btn:focus { 
+            background: #007bff; 
+            border-color: white; 
+            transform: scale(1.1); /* Makes the button pop out */
+            outline: none; 
+        }
     </style>
 </head>
 <body>
+
     <h1>My IPTV Playlists</h1>
-    <button class="btn" onclick="location.href='YOUR_M3U_URL_HERE'">Live Sports</button>
-    <button class="btn" onclick="location.href='YOUR_XTREAM_URL_HERE'">Movies & Series</button>
+    
+    <a href="#" class="btn">Live Sports</a>
+    <a href="#" class="btn">Movies & Series</a>
+
+    <script src="https://cdn.jsdelivr.net/npm/spatial-navigation-js@0.5.0/dist/spatial_navigation.min.js"></script>
     
     <script>
-        // Back button support for Samsung Remote
-        window.addEventListener('keydown', function(e) {
-            if(e.keyCode == 10009) tizen.application.getCurrentApplication().exit();
-        });
-    </script>
+        window.addEventListener('load', function() {
+            // 1. Initialize remote navigation
+            SpatialNavigation.init();
+            SpatialNavigation.add({ selector: '.btn' });
+            SpatialNavigation.makeFocusable();
+            SpatialNavigation.focus(); // Auto-focus the first button on startup
+
+            // 2. Handle the "Return/Exit" button on Samsung Remote
+            window.addEventListener('keydown', function(e) {
+                // Key code 10009 is the "Back" button on Tizen
+                if(e.keyCode == 10009 || e.key === "Escape") {
+                    if (window.tizen) {
+                        tizen.application.getCurrentApplication().exit();
+                    } else {
+                        window.close();
+                    }
+                }
+            });
+        </script>
 </body>
 </html>
