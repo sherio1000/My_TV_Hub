@@ -3,38 +3,24 @@
 <head>
     <meta charset="utf-8">
     <title>IPTV HUB</title>
-    <style>
-        body { background: #000; color: #fff; text-align: center; font-family: sans-serif; padding-top: 50px; }
-        h1 { font-size: 48px; margin-bottom: 50px; }
-        
-        /* This makes the buttons BIG and look like TV buttons */
-        .btn { 
-            display: inline-block; 
-            width: 600px; 
-            padding: 40px; 
-            margin: 20px; 
-            background: #222; 
-            border: 5px solid #444; 
-            color: white; 
-            font-size: 36px; 
-            text-decoration: none; 
-            border-radius: 20px;
-        }
-
-        /* This is the "Selector" color for your remote */
-        .btn:focus { 
-            background: #0066ff; 
-            border-color: #fff; 
-            transform: scale(1.05);
-            outline: none;
-        }
-    </style>
 </head>
-<body onload="init()">
+<body style="background: #000; color: #fff; text-align: center; font-family: sans-serif; padding-top: 50px;" onload="init()">
 
-    <h1>MY IPTV HUB</h1>
-    <a href="#" class="btn" id="default-focus">LIVE SPORTS</a><br>
-    <a href="#" class="btn">MOVIES & SERIES</a>
+    <h1 style="font-size: 48px; margin-bottom: 50px;">MY IPTV HUB</h1>
+
+    <a href="#" class="btn" id="default-focus" 
+       style="display: inline-block; width: 600px; padding: 40px; margin: 20px; background: #222; border: 5px solid #444; color: white; font-size: 36px; text-decoration: none; border-radius: 20px;">
+       LIVE SPORTS
+    </a><br>
+
+    <a href="#" class="btn" 
+       style="display: inline-block; width: 600px; padding: 40px; margin: 20px; background: #222; border: 5px solid #444; color: white; font-size: 36px; text-decoration: none; border-radius: 20px;">
+       MOVIES & SERIES
+    </a>
+
+    <style>
+        .btn:focus { background: #0066ff !important; border-color: #fff !important; outline: none; transform: scale(1.05); }
+    </style>
 
     <script src="https://cdn.jsdelivr.net/npm/spatial-navigation-js@0.5.0/dist/spatial_navigation.min.js"></script>
     <script>
@@ -45,9 +31,10 @@
             SpatialNavigation.focus('#default-focus');
         }
 
-        // EXIT BUTTON FIX
+        // EXIT BUTTON - Single Press Fix
         window.addEventListener('keydown', function(e) {
-            if(e.keyCode == 10009) { // Samsung Return Key
+            if(e.keyCode == 10009) { 
+                e.preventDefault(); // Stops the "ghost" double-press
                 tizen.application.getCurrentApplication().exit();
             }
         });
