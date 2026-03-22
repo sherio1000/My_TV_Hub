@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { background: #000; color: #fff; font-family: sans-serif; padding: 50px; }
+        .btn { display: block; width: 100%; padding: 25px; margin: 15px 0; background: #222; 
+               border: 3px solid #444; color: #fff; font-size: 30px; border-radius: 15px; text-align: left; }
+        .btn:focus { background: #007bff; border-color: #fff; outline: none; }
+    </style>
+</head>
+<body>
+    <h1>My IPTV Playlists</h1>
+    <button class="btn" onclick="location.href='YOUR_M3U_URL_HERE'">Live Sports</button>
+    <button class="btn" onclick="location.href='YOUR_XTREAM_URL_HERE'">Movies & Series</button>
+    
+    <script>
+        // Back button support for Samsung Remote
+        window.addEventListener('keydown', function(e) {
+            if(e.keyCode == 10009) tizen.application.getCurrentApplication().exit();
+        });
+    </script>
+</body>
+</html>
